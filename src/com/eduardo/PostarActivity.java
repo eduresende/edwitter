@@ -45,7 +45,12 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 	
 	public void onClick(View v) {
 		String status = editStatus.getText().toString();
-		new Postador().execute(status);
+		if (verificaLimite(status.length())){
+			new Postador().execute(status);
+		}else{
+			mostrarResposta(Color.RED, "A mensagem é muito longa. Max: 140");
+		}
+		
     }
 	
 	class Postador extends AsyncTask<String, Integer, String> {
@@ -99,4 +104,10 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
     	textContador.setTextColor(cor);
 	}
 
+	public boolean verificaLimite(int numCaracteres){
+		if (numCaracteres > 140)
+			return false;
+		
+		return true;
+	}
 }
