@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent" android:orientation="vertical" android:weightSum="1">
 <TextView  
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="Postar!"
-    />
+    android:layout_weight="0.06" android:layout_gravity="top"/>
+<EditText android:id="@+id/editStatus" android:inputType="textMultiLine" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="0.17" android:layout_gravity="top">
+    <requestFocus></requestFocus>
+</EditText>
+<Button android:text="Button" android:id="@+id/buttonPostar" android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
 
 </LinearLayout>
