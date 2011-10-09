@@ -1,13 +1,14 @@
 package com.eduardo;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 
@@ -16,6 +17,7 @@ public class PostarActivity extends Activity {
 
 	private Button buttonPostar;
 	private EditText editStatus;
+	private TextView textResposta;
 	
 	
 	@Override
@@ -28,19 +30,46 @@ public class PostarActivity extends Activity {
 		
 		buttonPostar = (Button)findViewById(R.id.buttonPostar);
 		editStatus = (EditText)findViewById(R.id.editStatus);
+		textResposta = (TextView)findViewById(R.id.textResposta);
 		
 		
 		buttonPostar.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				
 				String status = editStatus.getText().toString();
-				Log.v("Blah123", "vou postar " + status);
-				Twitter.postar(status);
-				editStatus.setText("");
-				Toast.makeText(PostarActivity.this, "Seu staus foi postado!", 1000).show();
+				//Twitter.postar(status);
+				//textResposta.setText("Mensagem postada com sucesso!");
+				new Postador().execute(status);
 			}
 		});
 		
 		
 	}
+	
+	class Postador extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected String doInBackground(String... status) {
+			try {
+				Twitter.postar(status[0]);
+				return "ok";
+			} catch (Exception e) {
+				Log.e(Constantes.TAG, e.toString());
+				e.printStackTrace();
+				return "Failed to post";
+			}
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			textResposta.setText("Postando, aguarde...");
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			textResposta.setText("Mensagem enviada com sucesso!");
+		}
+		    	
+    }
 
 }
