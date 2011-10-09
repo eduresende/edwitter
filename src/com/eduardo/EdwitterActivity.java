@@ -66,19 +66,23 @@ public class EdwitterActivity extends Activity {
 		
 		consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
 		consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+		
+		Log.v("Blah123", "oncreate");
 
 		
 		//Define login button and listener
 		buttonPost = (Button)findViewById(R.id.ButtonPost);
 		buttonPost.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				postar("Helo 10");
+				Log.v("Blah123", "postando");
+				postar("Helo 12");
 			}
 		});
 		
 		buttonRead = (Button)findViewById(R.id.ButtonRead);
 		buttonRead.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				Log.v("Blah123", "lendo");
 				ler();
 			}
 		});
