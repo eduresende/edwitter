@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 public class Twitter {
 	
-	static CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constantes.CONSUMER_KEY, Constantes.CONSUMER_SECRET);;
+	static CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constantes.CONSUMER_KEY, Constantes.CONSUMER_SECRET);
 	static HttpClient mClient = new DefaultHttpClient();
 	
 	public static JSONObject postar(String texto){
