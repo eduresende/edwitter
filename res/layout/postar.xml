@@ -15,6 +15,20 @@
     android:text=""
     android:layout_weight="0.06" android:layout_gravity="top"/>
     
+<TextView  
+	android:id="@+id/textResposta"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text=""
+    android:layout_weight="0.06" android:layout_gravity="top"/>
+    
+    
+<Button android:text="Postar"
+	android:id="@+id/buttonPostar"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent">
+</Button>
+    
 <EditText android:id="@+id/editStatus"
 	android:inputType="textMultiLine"
 	android:layout_height="wrap_content"
@@ -23,18 +37,5 @@
 	android:layout_gravity="top">
     <requestFocus></requestFocus>
 </EditText>
-
-<Button android:text="Button"
-	android:id="@+id/buttonPostar"
-	android:layout_height="wrap_content"
-	android:layout_width="match_parent">
-</Button>
-
-<TextView  
-	android:id="@+id/textResposta"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text=""
-    android:layout_weight="0.06" android:layout_gravity="top"/>
 
 </LinearLayout>

@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
-
 public class PostarActivity extends Activity implements OnClickListener, TextWatcher {
 	
 
@@ -51,7 +49,6 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
     }
 	
 	class Postador extends AsyncTask<String, Integer, String> {
-
 		@Override
 		protected String doInBackground(String... status) {
 			try {
@@ -66,26 +63,40 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		
 		@Override
 		protected void onPreExecute() {
-			textResposta.setText("Postando, aguarde...");
+			mostrarResposta(Color.YELLOW, "Postando, aguarde...");
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
-			textResposta.setText("Mensagem enviada com sucesso!");
+			mostrarResposta(Color.GREEN, "Mensagem enviada com sucesso!");
+			limparStatus();
 		}
-		    	
     }
 
+	// metodos TextWatcher
 	public void afterTextChanged(Editable s) {
 		int count = 140 - s.length();
-    	textContador.setText(Integer.toString(count));
-    	textContador.setTextColor(Color.GREEN);
+		exibirNumCaracteres(Color.GREEN, count);
     	if (count < 10)
-    		textContador.setTextColor(Color.YELLOW);
+    		exibirNumCaracteres(Color.YELLOW, count);
     	if (count < 0)
-    		textContador.setTextColor(Color.RED);		
+    		exibirNumCaracteres(Color.RED, count);		
 	}
 	public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 	public void onTextChanged(CharSequence s, int start, int before, int count) {}
+	
+	public void mostrarResposta(int cor, String resposta){
+		textResposta.setTextColor(cor);
+		textResposta.setText(resposta);
+	}
+	
+	public void limparStatus(){
+		editStatus.setText("");
+	}
+	
+	public void exibirNumCaracteres(int cor, int numCaracteres){
+		textContador.setText(Integer.toString(numCaracteres));
+    	textContador.setTextColor(cor);
+	}
 
 }
