@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.LinkedList;
 
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
@@ -16,17 +14,8 @@ import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -66,27 +55,28 @@ public class EdwitterActivity extends Activity {
 		consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
 		consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
 		
-		Log.v("Blah123", "oncreate");
-
-		
-		//Define login button and listener
 		buttonPost = (Button)findViewById(R.id.ButtonPost);
+		buttonRead = (Button)findViewById(R.id.ButtonRead);
+		
+		
 		buttonPost.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.v("Blah123", "chamando postar");
-				//postar("Helo 12");
-				Intent i = new Intent(EdwitterActivity.this, PostarActivity.class);
-				EdwitterActivity.this.startActivity(i);
+				chamarPostarActivity();
 			}
 		});
 		
-		buttonRead = (Button)findViewById(R.id.ButtonRead);
+		
 		buttonRead.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.v("Blah123", "lendo");
 				ler();
 			}
 		});
+	}
+	
+	public void chamarPostarActivity(){
+		Intent i = new Intent(EdwitterActivity.this, PostarActivity.class);
+		EdwitterActivity.this.startActivity(i);
 	}
 	
 	
@@ -127,41 +117,6 @@ public class EdwitterActivity extends Activity {
 		}
 		//return builder.toString();
 		Log.v("Blah123", builder.toString());
-	}
-	
-	
-	public void postar(String texto){
-		HttpParams parametros = new BasicHttpParams();
-		HttpProtocolParams.setUseExpectContinue(parametros, false);
-		
-		try {
-			HttpPost post = new HttpPost("http://twitter.com/statuses/update.json");
-			LinkedList<BasicNameValuePair> out = new LinkedList<BasicNameValuePair>();
-			out.add(new BasicNameValuePair("status", texto));
-			post.setEntity(new UrlEncodedFormEntity(out, HTTP.UTF_8));
-			post.setParams(parametros);
-			// sign the request to authenticate
-			consumer.sign(post);
-			String response = mClient.execute(post, new BasicResponseHandler());
-			jso = new JSONObject(response);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (OAuthMessageSignerException e) {
-			e.printStackTrace();
-		} catch (OAuthExpectationFailedException e) {
-			e.printStackTrace();
-		} catch (OAuthCommunicationException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} finally {
-
-		}
-		//return jso;
 	}
 
 }
