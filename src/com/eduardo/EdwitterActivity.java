@@ -68,14 +68,20 @@ public class EdwitterActivity extends Activity {
 		
 		buttonRead.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.v("Blah123", "lendo");
-				ler();
+				//Log.v("Blah123", "lendo");
+				//ler();
+				chamarTimelineActivity();
 			}
 		});
 	}
 	
 	public void chamarPostarActivity(){
 		Intent i = new Intent(EdwitterActivity.this, PostarActivity.class);
+		EdwitterActivity.this.startActivity(i);
+	}
+	
+	public void chamarTimelineActivity(){
+		Intent i = new Intent(EdwitterActivity.this, TimelineActivity.class);
 		EdwitterActivity.this.startActivity(i);
 	}
 	

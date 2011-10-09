@@ -9,4 +9,6 @@
     <string name="respostaMensagemSucesso">Mensagem enviada com sucesso!</string>
     <string name="instrucaoPostar">Digite a mensagem e pressione o botão &quot;Postar&quot;</string>
     <string name="botaoPostar">Postar</string>
+    <string name="botaoAtualizar">Atualizar</string>
+    <string name="textoTimeline">aqui aparecerão os posts</string>
 </resources>
