@@ -28,7 +28,7 @@ public class Twitter {
 	static CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constantes.CONSUMER_KEY, Constantes.CONSUMER_SECRET);;
 	static HttpClient mClient = new DefaultHttpClient();
 	
-	public static void postar(String texto){
+	public static JSONObject postar(String texto){
 		
 		JSONObject jso = null;
 		consumer.setTokenWithSecret(Constantes.TOKEN, Constantes.TOKEN_SECRET);
@@ -63,7 +63,7 @@ public class Twitter {
 		} finally {
 
 		}
-		//return jso;
+		return jso;
 	}
 
 }
