@@ -28,8 +28,6 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.postar);
 		
-		Log.v("Blah123", "entrei no postar");
-		
 		buttonPostar = (Button)findViewById(R.id.buttonPostar);
 		buttonPostar.setOnClickListener(this);
 		
@@ -62,19 +60,21 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 			} catch (Exception e) {
 				Log.e(Constantes.TAG, e.toString());
 				e.printStackTrace();
-				return "Failed to post";
+				return "fail";
 			}
 		}
 		
 		@Override
 		protected void onPreExecute() {
 			mostrarResposta(Color.YELLOW, getString(R.string.respostaAguardandoPostagem));
+			desabilitarBotao();
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
 			mostrarResposta(Color.GREEN, getString(R.string.respostaMensagemSucesso));
 			limparStatus();
+			habilitarBotao();
 		}
     }
 
@@ -89,6 +89,15 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 	}
 	public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 	public void onTextChanged(CharSequence s, int start, int before, int count) {}
+	
+	
+	public void desabilitarBotao(){
+		buttonPostar.setEnabled(false);
+	}
+	
+	public void habilitarBotao(){
+		buttonPostar.setEnabled(true);
+	}
 	
 	public void mostrarResposta(int cor, String resposta){
 		textResposta.setTextColor(cor);
