@@ -8,4 +8,5 @@
     <string name="respostaAguardandoPostagem">Postando, aguarde...</string>
     <string name="respostaMensagemSucesso">Mensagem enviada com sucesso!</string>
     <string name="instrucaoPostar">Digite a mensagem e pressione o botão &quot;Postar&quot;</string>
+    <string name="botaoPostar">Postar</string>
 </resources>

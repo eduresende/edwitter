@@ -23,7 +23,7 @@
     android:layout_weight="0.06" android:layout_gravity="top"/>
     
     
-<Button android:text="Postar"
+<Button android:text="@string/botaoPostar"
 	android:id="@+id/buttonPostar"
 	android:layout_height="wrap_content"
 	android:layout_width="match_parent">
