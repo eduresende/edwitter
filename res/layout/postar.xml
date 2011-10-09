@@ -8,6 +8,13 @@
     android:text="Digite a sua mensagem e clique em postar"
     android:layout_weight="0.06" android:layout_gravity="top"/>
     
+<TextView  
+    android:id="@+id/textContador"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text=""
+    android:layout_weight="0.06" android:layout_gravity="top"/>
+    
 <EditText android:id="@+id/editStatus"
 	android:inputType="textMultiLine"
 	android:layout_height="wrap_content"
