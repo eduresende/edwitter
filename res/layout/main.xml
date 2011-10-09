@@ -9,4 +9,15 @@
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
+    
+<Button android:text="Postar" android:id="@+id/ButtonPost"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:singleLine="true" android:layout_marginTop="100dip"
+			android:layout_centerHorizontal="true" android:layout_centerVertical="true"/>    
+			
+<Button android:text="Ler" android:id="@+id/ButtonRead"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:singleLine="true" android:layout_marginTop="100dip"
+			android:layout_centerHorizontal="true" android:layout_centerVertical="true"/>			
+
 </LinearLayout>
