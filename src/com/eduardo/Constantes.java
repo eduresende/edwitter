@@ -9,4 +9,6 @@ public class Constantes {
 	static String TOKEN_SECRET =           "iJprawuBSbobJaQGHt5igOa1sMsLIw5Y5E1p3SRvs";
 	
 	static String POST_RESOURCE =           "http://twitter.com/statuses/update.json";
+	
+	static String TAG = "Blah123";
 }
