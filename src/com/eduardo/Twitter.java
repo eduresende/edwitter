@@ -25,26 +25,19 @@ import org.json.JSONObject;
 
 public class Twitter {
 	
-	static String CONSUMER_KEY =           "v3ux2TP1Wppio2eO8kAg";
-	static String CONSUMER_SECRET =        "8W5Gnr1GMLhBCSmkt08FkIyqMQk5i8WX2bcywCbOMQ";
-	static String CALLBACK_URL =           "http://www.eduardo.com";
-
-	static String TOKEN =           "387261509-Yk9Br5sw0bUdLNucEEfxE0Kp4Y2YcJ81PIXhJSPE";
-	static String TOKEN_SECRET =           "iJprawuBSbobJaQGHt5igOa1sMsLIw5Y5E1p3SRvs";
-	
-	static CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);;
+	static CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constantes.CONSUMER_KEY, Constantes.CONSUMER_SECRET);;
 	static HttpClient mClient = new DefaultHttpClient();
 	
 	public static void postar(String texto){
 		
 		JSONObject jso = null;
-		consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+		consumer.setTokenWithSecret(Constantes.TOKEN, Constantes.TOKEN_SECRET);
 		
 		HttpParams parametros = new BasicHttpParams();
 		HttpProtocolParams.setUseExpectContinue(parametros, false);
 		
 		try {
-			HttpPost post = new HttpPost("http://twitter.com/statuses/update.json");
+			HttpPost post = new HttpPost(Constantes.POST_RESOURCE);
 			LinkedList<BasicNameValuePair> out = new LinkedList<BasicNameValuePair>();
 			out.add(new BasicNameValuePair("status", texto));
 			post.setEntity(new UrlEncodedFormEntity(out, HTTP.UTF_8));
