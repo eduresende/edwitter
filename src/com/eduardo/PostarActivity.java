@@ -48,7 +48,7 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		if (verificaLimite(status.length())){
 			new Postador().execute(status);
 		}else{
-			mostrarResposta(Color.RED, "A mensagem é muito longa. Max: 140");
+			mostrarResposta(Color.RED, getString(R.string.respostaMensagemLonga));
 		}
 		
     }
@@ -68,12 +68,12 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		
 		@Override
 		protected void onPreExecute() {
-			mostrarResposta(Color.YELLOW, "Postando, aguarde...");
+			mostrarResposta(Color.YELLOW, getString(R.string.respostaAguardandoPostagem));
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
-			mostrarResposta(Color.GREEN, "Mensagem enviada com sucesso!");
+			mostrarResposta(Color.GREEN, getString(R.string.respostaMensagemSucesso));
 			limparStatus();
 		}
     }
