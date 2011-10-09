@@ -9,10 +9,15 @@
 	android:layout_width="match_parent">
 </Button>
 
-<TextView  
+<TextView
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/textoTimeline"
     android:layout_weight="0.06" android:layout_gravity="top"/>
+    
+<ListView android:id="@+id/listPosts"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent">
+</ListView>
 
 </LinearLayout>

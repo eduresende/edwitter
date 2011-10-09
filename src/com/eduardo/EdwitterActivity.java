@@ -4,6 +4,7 @@ import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -57,6 +58,7 @@ public class EdwitterActivity extends Activity {
 			public void onClick(View v) {
 				//Log.v("Blah123", "lendo");
 				//ler();
+				//JSONArray result = Twitter.ler();
 				chamarTimelineActivity();
 			}
 		});
