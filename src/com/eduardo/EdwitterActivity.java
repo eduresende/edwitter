@@ -11,14 +11,12 @@ import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.http.HttpResponse;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -32,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -74,8 +73,10 @@ public class EdwitterActivity extends Activity {
 		buttonPost = (Button)findViewById(R.id.ButtonPost);
 		buttonPost.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.v("Blah123", "postando");
-				postar("Helo 12");
+				Log.v("Blah123", "chamando postar");
+				//postar("Helo 12");
+				Intent i = new Intent(EdwitterActivity.this, PostarActivity.class);
+				EdwitterActivity.this.startActivity(i);
 			}
 		});
 		
