@@ -4,7 +4,7 @@
     <string name="app_name">Edwitter</string>
     <string name="acaoPostar">Postar</string>
     <string name="acaoLer">Ler</string>
-    <string name="respostaMensagemLonga">A mensagem é muito longa. Max: 140</string>
+    <string name="respostaMensagemTamanho">A mensagem precisa ter entre 1 e 140 caracteres.</string>
     <string name="respostaAguardandoPostagem">Postando, aguarde...</string>
     <string name="respostaMensagemSucesso">Mensagem enviada com sucesso!</string>
     <string name="instrucaoPostar">Digite a mensagem e pressione o botão &quot;Postar&quot;</string>

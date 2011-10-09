@@ -46,7 +46,7 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		if (verificaLimite(status.length())){
 			new Postador().execute(status);
 		}else{
-			mostrarResposta(Color.RED, getString(R.string.respostaMensagemLonga));
+			mostrarResposta(Color.RED, getString(R.string.respostaMensagemTamanho));
 		}
 		
     }
@@ -81,11 +81,7 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 	// metodos TextWatcher
 	public void afterTextChanged(Editable s) {
 		int count = 140 - s.length();
-		exibirNumCaracteres(Color.GREEN, count);
-    	if (count < 10)
-    		exibirNumCaracteres(Color.YELLOW, count);
-    	if (count < 0)
-    		exibirNumCaracteres(Color.RED, count);		
+		exibirNumCaracteres(count);
 	}
 	public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 	public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -108,13 +104,18 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		editStatus.setText("");
 	}
 	
-	public void exibirNumCaracteres(int cor, int numCaracteres){
-		textContador.setText(Integer.toString(numCaracteres));
-    	textContador.setTextColor(cor);
+	public void exibirNumCaracteres(int count){
+		textContador.setText(String.valueOf(count));
+		if (count >= 10)
+			textContador.setTextColor(Color.GREEN);
+		else if (count >= 0)
+    		textContador.setTextColor(Color.YELLOW);
+		else
+    		textContador.setTextColor(Color.RED);	
 	}
 
 	public boolean verificaLimite(int numCaracteres){
-		if (numCaracteres > 140)
+		if (numCaracteres == 0 || numCaracteres > 140)
 			return false;
 		
 		return true;
