@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 
@@ -34,7 +35,7 @@ public class PostarActivity extends Activity {
 				String status = editStatus.getText().toString();
 				Log.v("Blah123", "vou postar " + status);
 				Twitter.postar(status);
-				Log.v("Blah123", "postou!");
+				Toast.makeText(PostarActivity.this, "Seu staus foi postado!", 500).show();
 			}
 		});
 		
