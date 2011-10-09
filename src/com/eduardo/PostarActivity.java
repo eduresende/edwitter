@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 
 
-public class PostarActivity extends Activity {
+public class PostarActivity extends Activity implements OnClickListener {
 	
 
 	private Button buttonPostar;
@@ -29,22 +29,17 @@ public class PostarActivity extends Activity {
 		Log.v("Blah123", "entrei no postar");
 		
 		buttonPostar = (Button)findViewById(R.id.buttonPostar);
+		buttonPostar.setOnClickListener(this);
+		
 		editStatus = (EditText)findViewById(R.id.editStatus);
 		textResposta = (TextView)findViewById(R.id.textResposta);
-		
-		
-		buttonPostar.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				
-				String status = editStatus.getText().toString();
-				//Twitter.postar(status);
-				//textResposta.setText("Mensagem postada com sucesso!");
-				new Postador().execute(status);
-			}
-		});
-		
-		
+					
 	}
+	
+	public void onClick(View v) {
+		String status = editStatus.getText().toString();
+		new Postador().execute(status);
+    }
 	
 	class Postador extends AsyncTask<String, Integer, String> {
 
