@@ -10,10 +10,10 @@
 </Button>
 
 <TextView
+	android:id="@+id/textRespostaLeitura"
     android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
     android:text="@string/textoTimeline"
-    android:layout_weight="0.06" android:layout_gravity="top"/>
+    android:layout_gravity="top" android:layout_height="27dp"/>
     
 <ListView android:id="@+id/listPosts"
 	android:layout_height="wrap_content"

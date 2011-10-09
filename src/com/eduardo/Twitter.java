@@ -25,30 +25,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class Twitter {
 	
-	static CommonsHttpOAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constantes.CONSUMER_KEY, Constantes.CONSUMER_SECRET);
-	static HttpClient mClient = new DefaultHttpClient();
+	static CommonsHttpOAuthConsumer consumer;
+	static HttpClient client = new DefaultHttpClient();
+	
+	public static CommonsHttpOAuthConsumer getConsumer(){
+		consumer = new CommonsHttpOAuthConsumer(Constantes.CONSUMER_KEY, Constantes.CONSUMER_SECRET);
+		consumer.setTokenWithSecret(Constantes.TOKEN, Constantes.TOKEN_SECRET);
+		return consumer;
+	}
+	
 	
 	public static JSONObject postar(String texto){
-		
 		JSONObject jso = null;
-		consumer.setTokenWithSecret(Constantes.TOKEN, Constantes.TOKEN_SECRET);
-		
 		HttpParams parametros = new BasicHttpParams();
 		HttpProtocolParams.setUseExpectContinue(parametros, false);
-		
 		try {
 			HttpPost post = new HttpPost(Constantes.POST_RESOURCE);
 			LinkedList<BasicNameValuePair> out = new LinkedList<BasicNameValuePair>();
 			out.add(new BasicNameValuePair("status", texto));
 			post.setEntity(new UrlEncodedFormEntity(out, HTTP.UTF_8));
 			post.setParams(parametros);
-			// sign the request to authenticate
-			consumer.sign(post);
-			String response = mClient.execute(post, new BasicResponseHandler());
+			getConsumer().sign(post);
+			String response = client.execute(post, new BasicResponseHandler());
 			jso = new JSONObject(response);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -71,17 +71,11 @@ public class Twitter {
 	}
 	
 	public static JSONArray ler(){
-		
-		//StringBuilder builder = new StringBuilder();
-		HttpGet httpGet = new HttpGet("http://api.twitter.com/1/statuses/home_timeline.json");
-		//org.apache.http.HttpResponse response;
-		consumer.setTokenWithSecret(Constantes.TOKEN, Constantes.TOKEN_SECRET);
-		
+		HttpGet httpGet = new HttpGet(Constantes.GET_TIMELINE_RESOURCE);
 		JSONArray array = null;
-		
 		try {
-			consumer.sign(httpGet);
-			String response = mClient.execute(httpGet, new BasicResponseHandler());
+			getConsumer().sign(httpGet);
+			String response = client.execute(httpGet, new BasicResponseHandler());
 			array = new JSONArray(response);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -97,88 +91,6 @@ public class Twitter {
 			e.printStackTrace();
 		}
 		return array;
-		
-			//StatusLine statusLine = ((org.apache.http.HttpResponse) response).getStatusLine();
-			//int statusCode = statusLine.getStatusCode();
-			
-			
-			//if (statusCode == 200) {
-				
-				
-				
-				
-				//jso = new JSONObject(response);
-				
-//				HttpEntity entity = response.getEntity();
-//				InputStream content = entity.getContent();
-//				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-//				String line;
-//				while ((line = reader.readLine()) != null) {
-//					builder.append(line);
-//					//Log.v(Constantes.TAG, "         linha            " + line);
-//				}
-//				
-//				try {
-//					Log.v(Constantes.TAG, "to aqui");
-//					jso = new JSONObject();
-//					
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//
-//			} else {
-//				//Couldn't obtain the data
-//			}
-//			
-//		} catch (OAuthMessageSignerException e) {
-//			e.printStackTrace();
-//		} catch (OAuthExpectationFailedException e) {
-//			e.printStackTrace();
-//		} catch (OAuthCommunicationException e) {
-//			e.printStackTrace();
-//		} catch (ClientProtocolException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
-//		
-//		
-		
-		
-		//Log.v(Constantes.TAG, statusCode);
-		
-//		try {
-//			consumer.sign(httpGet);
-//			org.apache.http.HttpResponse response = mClient.execute(httpGet);
-//			StatusLine statusLine = ((org.apache.http.HttpResponse) response).getStatusLine();
-//			int statusCode = statusLine.getStatusCode();
-//			if (statusCode == 200) {
-//				HttpEntity entity = response.getEntity();
-//				InputStream content = entity.getContent();
-//				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-//				String line;
-//				while ((line = reader.readLine()) != null) {
-//					builder.append(line);
-//				}
-//			} else {
-//				//Couldn't obtain the data
-//			}
-//		} catch (ClientProtocolException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		catch (OAuthMessageSignerException e) {
-//			e.printStackTrace();
-//		} catch (OAuthExpectationFailedException e) {
-//			e.printStackTrace();
-//		} catch (OAuthCommunicationException e) {
-//			e.printStackTrace();
-//		}
-//		//return builder.toString();
-		//Log.v(Constantes.TAG, builder.toString());
 	}
 
 }

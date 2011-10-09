@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,101 +20,94 @@ public class TimelineActivity extends Activity implements OnClickListener {
 	
 	Button buttonAtualizar;
 	ListView listTimeline;
+	TextView textResposta;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
-		
-		
-		
-		//buttonAtualizar = (Button)findViewById(R.id.buttonAtualizar);
-		//buttonAtualizar.setOnClickListener(this);
-		
-		//listTimeline = (ListView)findViewById(R.id.listView1);
-		
-		  super.onCreate(savedInstanceState);
-		  
-		  setContentView(R.layout.timeline);  
-		  
-		  listTimeline = (ListView) findViewById(R.id.listPosts);
-		  
-		  
-		  JSONArray result = Twitter.ler();
-//
-//			
-//			
-			 ArrayAdapter<String> servers = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-//
-//
-			    for(Integer i=0; i< result.length(); i++){
-			        try{
-
-			        	JSONObject obj = result.getJSONObject(i);
-			        	String post = obj.getJSONObject("user").getString("name") + ": " + obj.getString("text");
-			        	
-
-			            servers.add(post);
-			        }catch(JSONException e){
-
-			        }
-			    }
-			
-			listTimeline.setAdapter(servers);
-			listTimeline.setTextFilterEnabled(true);
-		  
-		  
-		  
-		  
-		  
-		  //setListAdapter(new ArrayAdapter<String>(this,
-		  //          android.R.layout.simple_list_item_1, COUNTRIES));
-		  //getListView().setTextFilterEnabled(true);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.timeline);
+		buttonAtualizar = (Button)findViewById(R.id.buttonAtualizar);
+		buttonAtualizar.setOnClickListener(this);
+		textResposta = (TextView)findViewById(R.id.textRespostaLeitura);
+		listTimeline = (ListView) findViewById(R.id.listPosts);
 	}
 	
 	public void onClick(View v) {
-		//new Leitor().execute();
-		JSONArray result = Twitter.ler();
-		//textoTimeline.setText(result);
-		//Twitter.ler();
-		
-		
-		 ArrayAdapter<String> servers = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-
-		    //Loop though my JSONArray
-		    for(Integer i=0; i< result.length(); i++){
-		        try{
-		            //Get My JSONObject and grab the String Value that I want.
-		            String obj = result.getJSONObject(i).getString("NAME");
-
-		            //Add the string to the list
-		            servers.add(obj);
-		        }catch(JSONException e){
-
-		        }
-		    }
-		
-		//setListAdapter(servers);
-		
-		//Display the listView
-	    //ListView lv = getListView();
-	    //lv.setTextFilterEnabled(true);
-		
-		
-		//Log.v(Constantes.TAG, result.toString());
-		
+		new Leitor().execute();
     }
 	
-	class Leitor extends AsyncTask<Void, Void, Void> {
+	class Leitor extends AsyncTask<Void, Void, JSONArray> {
 		@Override
-		protected Void doInBackground(Void... v) {
+		protected JSONArray doInBackground(Void... v) {
 			try {
-				Twitter.ler();
-				return null;
+				JSONArray timeline = buscaTimeline();
+				return timeline;
 			} catch (Exception e) {
 				Log.e(Constantes.TAG, e.toString());
 				e.printStackTrace();
 				return null;
 			}
 		}
+		
+		@Override
+		protected void onPreExecute() {
+			desabilitarBotao();
+			limpaLista();
+			mostrarResposta(Color.YELLOW, getString(R.string.respostaAguardandoLeitura));
+		}
+		
+		@Override
+		protected void onPostExecute(JSONArray timeline) {
+			ArrayAdapter<String> adapter = preparaAdapter(timeline);
+			populaLista(adapter);
+			mostrarResposta(Color.GREEN, getString(R.string.respostaLeituraSucesso));
+			habilitarBotao();
+		}
     }
+	
+	public JSONArray buscaTimeline(){
+		JSONArray result = Twitter.ler();
+		return result;
+	}
+	
+	public ArrayAdapter<String> preparaAdapter(JSONArray result){
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+	    for(Integer i=0; i< result.length(); i++){
+	    	try{
+	    		JSONObject obj = result.getJSONObject(i);
+			    String post = obj.getJSONObject("user").getString("name") + ": " + obj.getString("text");
+			    adapter.add(post);
+	        }catch(JSONException e){
+
+	        }
+	    }
+	    return adapter;
+	}
+	
+	public void desabilitarBotao(){
+		buttonAtualizar.setEnabled(false);
+	}
+	
+	public void habilitarBotao(){
+		buttonAtualizar.setEnabled(true);
+	}
+	
+	public void limpaLista(){
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		listTimeline.setAdapter(adapter);
+		listTimeline.setTextFilterEnabled(true);
+	}
+	
+	
+	public void populaLista(ArrayAdapter<String> adapter){
+		listTimeline.setAdapter(adapter);
+		listTimeline.setTextFilterEnabled(true);
+	}
+	
+	public void mostrarResposta(int cor, String resposta){
+		textResposta.setTextColor(cor);
+		textResposta.setText(resposta);
+	}
+	
 
 }

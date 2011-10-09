@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, EdwitterActivity!</string>
+    <string name="hello">Bem vido ao Edwitter, escolha uma das opções abaixo:</string>
     <string name="app_name">Edwitter</string>
     <string name="acaoPostar">Postar</string>
     <string name="acaoLer">Ler</string>
@@ -10,5 +10,7 @@
     <string name="instrucaoPostar">Digite a mensagem e pressione o botão &quot;Postar&quot;</string>
     <string name="botaoPostar">Postar</string>
     <string name="botaoAtualizar">Atualizar</string>
-    <string name="textoTimeline">aqui aparecerão os posts</string>
+    <string name="textoTimeline">Clique em atualizar para buscar a timeline</string>
+    <string name="respostaAguardandoLeitura">Buscando Timeline, aguarde...</string>
+    <string name="respostaLeituraSucesso">Timeline recebida com sucesso!</string>
 </resources>
