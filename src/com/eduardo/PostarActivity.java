@@ -35,7 +35,8 @@ public class PostarActivity extends Activity {
 				String status = editStatus.getText().toString();
 				Log.v("Blah123", "vou postar " + status);
 				Twitter.postar(status);
-				Toast.makeText(PostarActivity.this, "Seu staus foi postado!", 500).show();
+				editStatus.setText("");
+				Toast.makeText(PostarActivity.this, "Seu staus foi postado!", 1000).show();
 			}
 		});
 		
