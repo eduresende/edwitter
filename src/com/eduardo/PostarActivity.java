@@ -2,6 +2,9 @@ package com.eduardo;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,13 +16,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class PostarActivity extends Activity implements OnClickListener, TextWatcher {
+public class PostarActivity extends Activity implements OnClickListener, TextWatcher, LocationListener {
 	
 
 	private Button buttonPostar;
 	private EditText editStatus;
 	private TextView textResposta;
 	private TextView textContador;
+	
+	//location
+	private static final long LOCATION_MIN_TIME = 3600000; // One hour
+	private static final float LOCATION_MIN_DISTANCE = 1000; // One kilometer
+	LocationManager locationManager;
+	Location location;
+	String provider;
 	
 	
 	@Override
@@ -38,13 +48,21 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		textContador.setText(Integer.toString(140));
 		textContador.setTextColor(Color.GREEN);
 		editStatus.addTextChangedListener(this);
-					
 	}
 	
 	public void onClick(View v) {
-		String status = editStatus.getText().toString();
-		if (verificaLimite(status.length())){
-			new Postador().execute(status);
+		
+		String texto = editStatus.getText().toString();
+		
+		double latlong[] = buscarPosicaoGeografica();
+		String latitude = String.valueOf(latlong[0]);
+		String longitude = String.valueOf(latlong[0]);
+		
+		String params[] = {texto, latitude, longitude};
+
+		//String status = editStatus.getText().toString();
+		if (verificaLimite(texto.length())){
+			new Postador().execute(params);
 		}else{
 			mostrarResposta(Color.RED, getString(R.string.respostaMensagemTamanho));
 		}
@@ -53,9 +71,9 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 	
 	class Postador extends AsyncTask<String, Integer, String> {
 		@Override
-		protected String doInBackground(String... status) {
+		protected String doInBackground(String... params) {
 			try {
-				Twitter.postar(status[0]);
+				Twitter.postar(params);
 				return "ok";
 			} catch (Exception e) {
 				Log.e(Constantes.TAG, e.toString());
@@ -120,4 +138,50 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		
 		return true;
 	}
+
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		this.location = location;
+
+		
+	}
+
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		if (this.provider.equals(provider))
+			locationManager.removeUpdates(this);
+
+		
+	}
+
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		if (this.provider.equals(provider))
+			locationManager.requestLocationUpdates(this.provider, LOCATION_MIN_TIME,
+			LOCATION_MIN_DISTANCE, this);
+
+		
+	}
+
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public double[] buscarPosicaoGeografica(){
+		provider = LocationManager.GPS_PROVIDER;
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		double latlong[] = {0,0};
+		
+		if (locationManager != null) {
+			location = locationManager.getLastKnownLocation(provider); //
+			locationManager.requestLocationUpdates(provider, LOCATION_MIN_TIME, LOCATION_MIN_DISTANCE, this);
+		}
+		if (location != null){
+			latlong[0] = location.getLatitude();
+			latlong[1] = location.getLongitude();
+		}
+		return latlong;
+	}
+	
 }

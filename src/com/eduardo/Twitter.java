@@ -25,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Twitter {
 	
 	static CommonsHttpOAuthConsumer consumer;
@@ -37,14 +39,22 @@ public class Twitter {
 	}
 	
 	
-	public static JSONObject postar(String texto){
+	public static JSONObject postar(String params[]){
 		JSONObject jso = null;
 		HttpParams parametros = new BasicHttpParams();
 		HttpProtocolParams.setUseExpectContinue(parametros, false);
 		try {
 			HttpPost post = new HttpPost(Constantes.POST_RESOURCE);
 			LinkedList<BasicNameValuePair> out = new LinkedList<BasicNameValuePair>();
-			out.add(new BasicNameValuePair("status", texto));
+			out.add(new BasicNameValuePair("status", params[0]));
+			out.add(new BasicNameValuePair("lat", params[1]));
+			out.add(new BasicNameValuePair("long", params[2]));
+			out.add(new BasicNameValuePair("display_coordinates", "true"));
+			
+			Log.v(Constantes.TAG, params[1]);
+			Log.v(Constantes.TAG, params[2]);
+			
+			
 			post.setEntity(new UrlEncodedFormEntity(out, HTTP.UTF_8));
 			post.setParams(parametros);
 			getConsumer().sign(post);
@@ -76,6 +86,9 @@ public class Twitter {
 		try {
 			getConsumer().sign(httpGet);
 			String response = client.execute(httpGet, new BasicResponseHandler());
+			
+			Log.v(Constantes.TAG, response);
+			
 			array = new JSONArray(response);
 		} catch (JSONException e) {
 			e.printStackTrace();
