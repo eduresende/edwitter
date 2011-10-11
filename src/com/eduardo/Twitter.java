@@ -49,6 +49,7 @@ public class Twitter {
 			out.add(new BasicNameValuePair("status", params[0]));
 			out.add(new BasicNameValuePair("lat", params[1]));
 			out.add(new BasicNameValuePair("long", params[2]));
+			out.add(new BasicNameValuePair("place_id", params[3]));
 			out.add(new BasicNameValuePair("display_coordinates", "true"));
 			
 			Log.v(Constantes.TAG, params[1]);
@@ -104,6 +105,33 @@ public class Twitter {
 			e.printStackTrace();
 		}
 		return array;
+	}
+	
+	public static String buscarPlaceId(String latitude, String longitude) throws JSONException{
+		String params = "?lat=" + latitude + "&" + "long=" + longitude; 
+		HttpGet httpGet = new HttpGet(Constantes.GET_PLACE_ID + params);
+		String response = "";
+		String id = "";
+		try {
+			getConsumer().sign(httpGet);
+			response = client.execute(httpGet, new BasicResponseHandler());
+			JSONObject jso = null;
+			jso = new JSONObject(response);
+			id = jso.getJSONObject("result").getJSONArray("places").getJSONObject(0).getString("id");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (OAuthMessageSignerException e) {
+			e.printStackTrace();
+		} catch (OAuthExpectationFailedException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (OAuthCommunicationException e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 
 }

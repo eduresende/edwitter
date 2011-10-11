@@ -10,6 +10,7 @@ public class Constantes {
 	
 	static String POST_RESOURCE = "http://twitter.com/statuses/update.json";
 	static String GET_TIMELINE_RESOURCE = "http://api.twitter.com/1/statuses/home_timeline.json";
+	static String GET_PLACE_ID = "http://api.twitter.com/1/geo/reverse_geocode.json";
 	
 	static String TAG = "Blah123";
 }

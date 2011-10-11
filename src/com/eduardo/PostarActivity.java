@@ -1,5 +1,7 @@
 package com.eduardo;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.location.Location;
@@ -55,10 +57,19 @@ public class PostarActivity extends Activity implements OnClickListener, TextWat
 		String texto = editStatus.getText().toString();
 		
 		double latlong[] = buscarPosicaoGeografica();
-		String latitude = String.valueOf(latlong[0]);
-		String longitude = String.valueOf(latlong[0]);
+		String latitude = String.valueOf(latlong[0]); // "-19.93515";
+		String longitude = String.valueOf(latlong[0]); // "-43.92297";
+		String placeId = "";
+		try {
+			placeId = Twitter.buscarPlaceId(latitude, longitude);
+			Log.v(Constantes.TAG, placeId);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		String params[] = {texto, latitude, longitude};
+		
+		String params[] = {texto, latitude, longitude, placeId};
 
 		//String status = editStatus.getText().toString();
 		if (verificaLimite(texto.length())){
