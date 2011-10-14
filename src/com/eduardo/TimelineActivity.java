@@ -75,8 +75,7 @@ public class TimelineActivity extends Activity implements OnClickListener {
 	    for(Integer i=0; i< result.length(); i++){
 	    	try{
 	    		JSONObject obj = result.getJSONObject(i);
-	    		String location = obj.getString("geo");
-			    String post = obj.getJSONObject("user").getString("name") + ": " + obj.getString("text") + ". Location: " + location;
+			    String post = obj.getJSONObject("user").getString("name") + ": " + obj.getString("text");
 			    adapter.add(post);
 	        }catch(JSONException e){
 
